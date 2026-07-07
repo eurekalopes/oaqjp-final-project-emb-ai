@@ -18,7 +18,7 @@ def getemotions():
 def detect_emotion():
     '''
     Read the text to analyze from request and
-    return response along with dominant emotion
+    return response along with dominant emotion using 
     '''
     if request.method == 'POST':
         req = request.get_json()
