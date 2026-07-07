@@ -4,10 +4,9 @@ import requests
 def is_invalid_input(text):
     if not isinstance(text, str):
         return True
+    
     stripped = text.strip()
     if stripped == '':
-        return True
-    if stripped.isdigit():
         return True
     return False
 
@@ -19,16 +18,16 @@ def emotion_detector(text_to_analyze) -> None:
     custom_header = {"grpc-metadata-mm-model-id": "emotion_aggregated-workflow_lang_en_stock"}
     input_json = { "raw_document": { "text": text_to_analyze } }
 
+    response = requests.post(url, json = input_json, headers = custom_header)
+
     if is_invalid_input(text_to_analyze):
         response.status_code = 400
 
-    response = requests.post(url, json = input_json, headers = custom_header)
-    
     if response.status_code == 200:
         formatted_result = json.loads(response.text)
         formatted_dict_result = dominant_emotion(formatted_result)
     elif response.status_code == 400:
-        formated_dict_result = {
+        formatted_dict_result = {
             'anger': None,
             'disgust': None,
             'fear': None,
