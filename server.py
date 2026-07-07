@@ -5,8 +5,7 @@ from EmotionDetection.emotion_detection import emotion_detector
 # Instantiate Flask functionality
 app = Flask(__name__)
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+
 
 @app.route("/")
 def getemotions():
@@ -16,13 +15,13 @@ def getemotions():
 def detect_emotion():
     if request.method == 'POST':
         req = request.get_json()
-        text_to_analyze = req.get('text')
+        text_to_analyze = req.get('textToAnalyze')
     
     if request.method == 'GET':
-        text_to_analyze = request.args.get('text')
-
+        text_to_analyze = request.args.get('textToAnalyze')
+    
     response = emotion_detector(text_to_analyze)
-
     return response
 
-
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
